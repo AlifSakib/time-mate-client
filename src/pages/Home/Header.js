@@ -1,6 +1,6 @@
 export const Header = () => {
   return (
-    <div className="relative bg-slate-700">
+    <div className="relative bg-gradient-to-tl from-green-400 to-indigo-900">
       <div className="absolute inset-x-0 bottom-0">
         <svg
           viewBox="0 0 224 12"
@@ -20,20 +20,23 @@ export const Header = () => {
                   Find your career path
                 </h2>
 
-                <p class="mt-4 text-yellow-500">
+                <p class="mt-4 text-white">
                   Schedule appointments online with ease, Find and book
                   appointments with local businesses, Streamline your
                   appointment booking process with our platform
                 </p>
 
                 <a
-                  class="mt-8 inline-flex items-center rounded-full  px-8 py-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center"
+                  class="mt-8 inline-flex items-center rounded-full  px-8 py-3 text-slate-700 bg-white border border-slate-700 focus:outline-none focus:bg-slate-200 hover:bg-slate-200 duration-150 justify-center"
                   href="/get-started"
                 >
-                  <span class="text-sm font-medium"> Moke Appointment </span>
+                  <span class="text-sm font-medium text-slate-900">
+                    {" "}
+                    Make Appointment{" "}
+                  </span>
 
                   <svg
-                    class="ml-3 h-5 w-5"
+                    class="ml-3 h-5 w-5 text-slate-700"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -54,7 +57,7 @@ export const Header = () => {
                   class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
                   href="/accountant"
                 >
-                  <span class="inline-block rounded-lg bg-yellow-700 p-3 text-slate-700">
+                  <span class="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
                       class="h-6 w-6"
                       fill="none"
@@ -84,7 +87,7 @@ export const Header = () => {
                   class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
                   href="/accountant"
                 >
-                  <span class="inline-block rounded-lg bg-yellow-700 p-3 text-slate-700">
+                  <span class="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
                       class="h-6 w-6"
                       fill="none"
@@ -114,7 +117,7 @@ export const Header = () => {
                   class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
                   href="/accountant"
                 >
-                  <span class="inline-block rounded-lg bg-yellow-700 p-3 text-slate-700">
+                  <span class="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
                       class="h-6 w-6"
                       fill="none"
@@ -145,7 +148,7 @@ export const Header = () => {
                   class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
                   href="/accountant"
                 >
-                  <span class="inline-block rounded-lg bg-yellow-700 p-3 text-slate-700">
+                  <span class="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
                       class="h-6 w-6"
                       fill="none"
@@ -175,7 +178,7 @@ export const Header = () => {
                   class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
                   href="/accountant"
                 >
-                  <span class="inline-block rounded-lg bg-yellow-700 p-3 text-slate-700">
+                  <span class="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
                       class="h-6 w-6"
                       fill="none"
@@ -206,7 +209,7 @@ export const Header = () => {
                   class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
                   href="/accountant"
                 >
-                  <span class="inline-block rounded-lg bg-yellow-700 p-3 text-slate-700">
+                  <span class="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
                       class="h-6 w-6"
                       fill="none"
