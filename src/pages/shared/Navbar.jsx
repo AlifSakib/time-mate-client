@@ -1,10 +1,16 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 export default function Navbar() {
   const [show, setshow] = useState(false);
-  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, userLogout } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    userLogout();
+    navigate("/");
+  };
   return (
     <div className=" bg-white">
       <nav className="2xl:container 2xl:mx-auto sm:py-6 sm:px-7 py-5 px-4">
@@ -117,12 +123,14 @@ export default function Navbar() {
           </div>
           {user?.uid ? (
             <>
-              <button
-                to="signup"
-                className="rounded-md flex space-x-2 w-24 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
-              >
-                Sign Out
-              </button>
+              <div className="hidden sm:flex flex-row space-x-4">
+                <button
+                  to="signup"
+                  className="rounded-md flex space-x-2 w-24 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  Sign Out
+                </button>
+              </div>
             </>
           ) : (
             <>
@@ -298,14 +306,44 @@ export default function Navbar() {
               />
             </svg>
           </div>
-          <div className="flex flex-col gap-4 mt-4 w-80 mx-auto ">
+          {/* <div className="flex flex-col gap-4 mt-4 w-80 mx-auto ">
             <button className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-indigo-700 bg-indigo-600 bg-opacity-0 hover:opacity-100  border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center">
               Sign Up
             </button>
             <button className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-white bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:bg-indigo-600 hover:bg-indigo-600 duration-150 justify-center items-center">
               Sign In
             </button>
-          </div>
+          </div> */}
+          {user?.uid ? (
+            <>
+              <div className="flex flex-col gap-4 mt-4 w-80 mx-auto ">
+                <button
+                  onClick={handleLogOut}
+                  className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-indigo-700 bg-indigo-600 bg-opacity-0 hover:opacity-100  border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col gap-4 mt-4 w-80 mx-auto ">
+                <Link
+                  to="signup"
+                  className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-indigo-700 bg-indigo-600 bg-opacity-0 hover:opacity-100  border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  Sign Up
+                </Link>
+
+                <Link
+                  to="signin"
+                  className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-white bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:bg-indigo-600 hover:bg-indigo-600 duration-150 justify-center items-center"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </nav>
     </div>
