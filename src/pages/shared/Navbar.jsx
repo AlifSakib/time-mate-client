@@ -10,7 +10,7 @@ export default function Navbar() {
         <div className="flex justify-between ">
           <div className="hidden sm:flex flex-row items-center space-x-6">
             <svg
-              className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer"
+              className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer "
               width={24}
               height={24}
               viewBox="0 0 24 24"
@@ -94,7 +94,7 @@ export default function Navbar() {
               />
             </svg>
           </div>
-          <div className=" flex space-x-3 items-center">
+          <div className=" flex space-x-3 items-center ">
             <svg
               width={34}
               height={34}
@@ -112,9 +112,12 @@ export default function Navbar() {
             </h1>
           </div>
           <div className="hidden sm:flex flex-row space-x-4">
-            <button className="rounded-md flex space-x-2 w-24 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center">
+            <Link
+              to="signup"
+              className="rounded-md flex space-x-2 w-24 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+            >
               Sign Up
-            </button>
+            </Link>
 
             <Link
               to="signin"
