@@ -7,6 +7,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../../context/AuthProvider";
 
 const BookAppointment = () => {
+  const info = [
+    { title: "event 1", date: "2022-12-01" },
+    { title: "event 2", date: "2022-12-02" },
+    { title: "event 1", date: "2022-12-01" },
+    { title: "event 2", date: "2022-12-02" },
+    { title: "event 1", date: "2022-12-01" },
+    { title: "event 2", date: "2022-12-02" },
+  ];
+
   const { user } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(new Date());
   console.log(startDate);
@@ -15,16 +24,53 @@ const BookAppointment = () => {
     const selectedDate = arg.dateStr;
     console.log(selectedDate);
   };
-  const initialState = {};
+  const initialState = {
+    firstname: "",
+    lastname: "",
+    email: user?.email,
+    phone: "",
+    appointment_date: "",
+    address: "",
+    checkbox: false,
+  };
 
   const reducer = (state, action) => {
-    return;
+    switch (action.type) {
+      case "INPUT":
+        return {
+          ...state,
+          [action.payload.name]: action.payload.value,
+        };
+
+      case "TOGGLE":
+        return {
+          ...state,
+          checkbox: !state.checkbox,
+        };
+
+      default:
+        break;
+    }
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleBooking = (e) => {
     e.preventDefault();
+
+    // fetch(`http://localhost:5000/all-bookings`, {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(state),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.success) {
+    //       toast.success(data.message);
+    //     }
+    //   });
   };
 
   return (
@@ -61,7 +107,14 @@ const BookAppointment = () => {
                     First name
                   </label>
                   <input
+                    onBlur={(e) =>
+                      dispatch({
+                        type: "INPUT",
+                        payload: { name: e.target.name, value: e.target.value },
+                      })
+                    }
                     type="name"
+                    name="firstname"
                     tabIndex={0}
                     aria-label="Enter first name"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
@@ -73,7 +126,14 @@ const BookAppointment = () => {
                     Last name
                   </label>
                   <input
+                    onBlur={(e) =>
+                      dispatch({
+                        type: "INPUT",
+                        payload: { name: e.target.name, value: e.target.value },
+                      })
+                    }
                     type="name"
+                    name="lastname"
                     tabIndex={0}
                     aria-label="Enter last name"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
@@ -87,12 +147,18 @@ const BookAppointment = () => {
                     Email Address
                   </label>
                   <input
+                    onBlur={(e) =>
+                      dispatch({
+                        type: "INPUT",
+                        payload: { name: e.target.name, value: e.target.value },
+                      })
+                    }
                     type="email"
+                    name="email"
                     tabIndex={0}
                     aria-label="Enter email Address"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
                     defaultValue={user?.email}
-                    disabled
                   />
                 </div>
                 <div className="flex flex-col md:ml-12 md:mt-0 mt-8">
@@ -100,7 +166,14 @@ const BookAppointment = () => {
                     Phone number
                   </label>
                   <input
+                    onBlur={(e) =>
+                      dispatch({
+                        type: "INPUT",
+                        payload: { name: e.target.name, value: e.target.value },
+                      })
+                    }
                     type="number"
+                    name="phone"
                     tabIndex={0}
                     aria-label="Enter phone number"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
@@ -115,9 +188,19 @@ const BookAppointment = () => {
                   </label>
 
                   <DatePicker
+                    name="appointment_date"
                     selected={startDate}
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(date) => {
+                      dispatch({
+                        type: "INPUT",
+                        payload: {
+                          name: "appointment_date",
+                          value: date.toLocaleDateString(),
+                        },
+                      });
+                      setStartDate(date);
+                    }}
                   />
                 </div>
                 <div className="flex flex-col md:ml-12 md:mt-0 mt-8">
@@ -125,7 +208,14 @@ const BookAppointment = () => {
                     Address
                   </label>
                   <input
+                    onBlur={(e) =>
+                      dispatch({
+                        type: "INPUT",
+                        payload: { name: e.target.name, value: e.target.value },
+                      })
+                    }
                     type="name"
+                    name="address"
                     tabIndex={0}
                     aria-label="Enter place of birth"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
@@ -137,10 +227,16 @@ const BookAppointment = () => {
                 <div className="py-4 flex items-center">
                   <div className="bg-white dark:bg-gray-800 border rounded-sm border-gray-400 dark:border-gray-700 w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
                     <input
+                      onClick={(e) =>
+                        dispatch({
+                          type: "TOGGLE",
+                        })
+                      }
                       type="checkbox"
+                      name="checkbox"
                       tabIndex={0}
                       aria-label="I agree with the terms of service"
-                      defaultChecked
+                      defaultChecked={state.checkbox}
                       className="checkbox opacity-0 absolute cursor-pointer w-full h-full"
                     />
                     <div className="check-icon hidden bg-blue-500 text-white rounded-sm">
@@ -170,6 +266,7 @@ const BookAppointment = () => {
               <button
                 type="submit"
                 aria-label="Next step"
+                disabled={!state.checkbox}
                 className="flex items-center justify-center py-4 px-7 focus:outline-none bg-white border rounded border-gray-400 mt-7 md:mt-14 hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
               >
                 <span className="text-sm font-medium text-center text-gray-800 capitalize">
@@ -201,10 +298,7 @@ const BookAppointment = () => {
             initialView="dayGridMonth"
             dateClick={handleDateClick}
             weekends={false}
-            events={[
-              { title: "event 1", date: "2022-12-01" },
-              { title: "event 2", date: "2022-12-02" },
-            ]}
+            events={[...info]}
           />
         </div>
       </div>
