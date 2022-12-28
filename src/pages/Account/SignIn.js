@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthProvider";
 
 function SignIn() {
   const navigate = useNavigate();
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, googleSignIn } = useContext(AuthContext);
 
   const initialState = {
     email: "",
@@ -38,6 +38,17 @@ function SignIn() {
         toast.error(error.message);
       });
   };
+
+  const handleGoogle = () => {
+    googleSignIn()
+      .then((result) => {
+        toast.success(`Welcome Back, Login Success`);
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   return (
     <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-16 px-4">
       <div className="flex flex-col items-center justify-center">
@@ -62,6 +73,7 @@ function SignIn() {
             </span>
           </p>
           <button
+            onClick={handleGoogle}
             aria-label="Continue with google"
             className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
           >
