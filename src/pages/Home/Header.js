@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Header = () => {
   return (
     <div className="relative bg-gradient-to-tl from-green-400 to-indigo-900">
@@ -26,7 +28,8 @@ export const Header = () => {
                   appointment booking process with our platform
                 </p>
 
-                <a
+                <Link
+                  to="/book-appointments"
                   className="mt-8 inline-flex items-center rounded-full  px-8 py-3 text-slate-700 bg-white border border-slate-700 focus:outline-none focus:bg-slate-200 hover:bg-slate-200 duration-150 justify-center"
                   href="/get-started"
                 >
@@ -49,7 +52,7 @@ export const Header = () => {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
 
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
