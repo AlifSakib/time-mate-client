@@ -2,10 +2,11 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import axios from "axios";
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-hot-toast";
+import { useQuery } from "react-query";
 import { AuthContext } from "../../context/AuthProvider";
 
 const BookAppointment = () => {
@@ -33,13 +34,23 @@ const BookAppointment = () => {
   booking.map((b) => info.push(b.event));
   console.log(info);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/all-bookings")
-      .then((res) => res.json())
-      .then((data) => {
-        setBooking(data.data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/all-bookings")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setBooking(data.data);
+  //     });
+  // }, []);
+
+  const { data: all_bookings = [], refetch } = useQuery({
+    queryKey: ["all_bookings"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/all-bookings`);
+      const data = await res.json();
+
+      return setBooking(data.data);
+    },
+  });
 
   const initialState = {
     firstname: "",
@@ -90,6 +101,7 @@ const BookAppointment = () => {
         .then(function (res) {
           if (res.data.success) {
             toast.success("Appointment Booked");
+            refetch();
           }
         })
         .catch(function (error) {
