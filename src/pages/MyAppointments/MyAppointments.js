@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useQuery } from "react-query";
+import { AuthContext } from "../../context/AuthProvider";
+import MyAppointment from "./MyAppointment";
 
 const MyAppointments = () => {
+  const { user } = useContext(AuthContext);
+  const { data: my_bookings = [], refetch } = useQuery({
+    queryKey: ["my_bookings"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/my-bookings/${user?.email}`
+      );
+      const data = await res.json();
+
+      return data;
+    },
+  });
+  console.log(my_bookings);
   return (
     <div>
       <div className="bg-gray-100">
@@ -42,206 +58,12 @@ const MyAppointments = () => {
             </svg>
           </div>
           <div className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Football Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  Sed ut perspiciatis unde omnis iste. Lorem ipsum dolor sit
-                  amet, consectetur adipiscing elit.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Bowling Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  Disrupt inspire and think tank, social entrepreneur but
-                  preliminary thinking think tank compelling.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Cycling Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  A slice of heaven. O for awesome, this chocka full cuzzie is
-                  as rip-off as a cracker.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Weight Lifting Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  Meanwhile, in behind the bicycle shed, Hercules Morse, as big
-                  as a horse.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Golf Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  Disrupt inspire and think tank, social entrepreneur but
-                  preliminary thinking think tank compelling.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Hockey Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  A business big enough that it could be listed on the NASDAQ
-                  goes belly up.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Shooting Sports</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  Lookout flogging bilge rat main sheet bilge water nipper fluke
-                  to go on account heave down clap of thunder.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
-            <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
-              <div className="p-5">
-                <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-indigo-50">
-                  <svg
-                    className="w-8 h-8 text-deep-purple-accent-400"
-                    stroke="currentColor"
-                    viewBox="0 0 52 52"
-                  >
-                    <polygon
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      points="29 13 14 29 25 29 23 39 38 23 27 23"
-                    />
-                  </svg>
-                </div>
-                <p className="mb-2 font-bold">Martial Arts</p>
-                <p className="text-sm leading-5 text-gray-900">
-                  Webtwo ipsum orkut reddit meebo skype vimeo jajah spock
-                  empressr zimbra, mobly napster.
-                </p>
-              </div>
-              <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-            </div>
+            {my_bookings.map((my_booking) => (
+              <MyAppointment
+                key={my_booking._id}
+                my_booking={my_booking}
+              ></MyAppointment>
+            ))}
           </div>
         </div>
       </div>
