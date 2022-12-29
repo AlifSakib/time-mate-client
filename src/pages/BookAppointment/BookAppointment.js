@@ -1,36 +1,53 @@
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
-import React, { useContext, useReducer, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/AuthProvider";
 
 const BookAppointment = () => {
-  const info = [
-    { title: "event 1", date: "2022-12-01" },
-    { title: "event 2", date: "2022-12-02" },
-    { title: "event 1", date: "2022-12-01" },
-    { title: "event 2", date: "2022-12-02" },
-    { title: "event 1", date: "2022-12-01" },
-    { title: "event 2", date: "2022-12-02" },
-  ];
+  function formatDate(date) {
+    let d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    return [year, month, day].join("-");
+  }
+
+  const info = [];
 
   const { user } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(new Date());
-  console.log(startDate);
+  const [booking, setBooking] = useState([]);
+
   const handleDateClick = (arg) => {
-    // bind with an arrow function
     const selectedDate = arg.dateStr;
     console.log(selectedDate);
   };
+
+  booking.map((b) => info.push(b.event));
+  console.log(info);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/all-bookings")
+      .then((res) => res.json())
+      .then((data) => {
+        setBooking(data.data);
+      });
+  }, []);
+
   const initialState = {
     firstname: "",
     lastname: "",
     email: user?.email,
     phone: "",
     appointment_date: "",
-    address: "",
+    event: "",
     checkbox: false,
   };
 
@@ -55,22 +72,38 @@ const BookAppointment = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  //   axios
+  //     .get(`http://localhost:5000/all-bookings`)
+  //     .then(function (res) {
+  //       setBooking(res.data.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+
   const handleBooking = (e) => {
     e.preventDefault();
 
-    // fetch(`http://localhost:5000/all-bookings`, {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(state),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.success) {
-    //       toast.success(data.message);
-    //     }
-    //   });
+    axios.all([
+      axios
+        .post(`http://localhost:5000/all-bookings`, {
+          first_name: state.firstname,
+          last_name: state.lastname,
+          email: state.email,
+          event: {
+            date: formatDate(startDate),
+            title: state.event,
+          },
+        })
+        .then(function (res) {
+          if (res.data.success) {
+            toast.success("Appointment Booked");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        }),
+    ]);
   };
 
   return (
@@ -118,7 +151,8 @@ const BookAppointment = () => {
                     tabIndex={0}
                     aria-label="Enter first name"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
-                    defaultValue="William"
+                    placeholder="William"
+                    required
                   />
                 </div>
                 <div className="flex flex-col md:ml-12 md:mt-0 mt-8">
@@ -137,7 +171,8 @@ const BookAppointment = () => {
                     tabIndex={0}
                     aria-label="Enter last name"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
-                    defaultValue="Smith"
+                    placeholder="Smith"
+                    required
                   />
                 </div>
               </div>
@@ -158,7 +193,8 @@ const BookAppointment = () => {
                     tabIndex={0}
                     aria-label="Enter email Address"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
-                    defaultValue={user?.email}
+                    placeholder={user?.email}
+                    required
                   />
                 </div>
                 <div className="flex flex-col md:ml-12 md:mt-0 mt-8">
@@ -172,12 +208,13 @@ const BookAppointment = () => {
                         payload: { name: e.target.name, value: e.target.value },
                       })
                     }
-                    type="number"
+                    type="text"
                     name="phone"
                     tabIndex={0}
                     aria-label="Enter phone number"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
-                    defaultValue="+81 839274"
+                    placeholder="+81 839274"
+                    required
                   />
                 </div>
               </div>
@@ -191,12 +228,13 @@ const BookAppointment = () => {
                     name="appointment_date"
                     selected={startDate}
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
+                    placeholder={startDate}
                     onChange={(date) => {
                       dispatch({
                         type: "INPUT",
                         payload: {
                           name: "appointment_date",
-                          value: date.toLocaleDateString(),
+                          value: date,
                         },
                       });
                       setStartDate(date);
@@ -205,7 +243,7 @@ const BookAppointment = () => {
                 </div>
                 <div className="flex flex-col md:ml-12 md:mt-0 mt-8">
                   <label className="mb-3 text-sm leading-none text-gray-800">
-                    Address
+                    Event Name
                   </label>
                   <input
                     onBlur={(e) =>
@@ -215,11 +253,12 @@ const BookAppointment = () => {
                       })
                     }
                     type="name"
-                    name="address"
+                    name="event"
                     tabIndex={0}
                     aria-label="Enter place of birth"
                     className="w-64 bg-gray-100 text-sm font-medium leading-none text-gray-800 p-3 border rounded border-gray-200"
-                    defaultValue="San Diego, CA, USA"
+                    placeholder="Front End"
+                    required
                   />
                 </div>
               </div>
@@ -298,6 +337,8 @@ const BookAppointment = () => {
             initialView="dayGridMonth"
             dateClick={handleDateClick}
             weekends={false}
+            droppable={true}
+            editable={true}
             events={[...info]}
           />
         </div>

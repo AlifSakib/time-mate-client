@@ -124,6 +124,12 @@ export default function Navbar() {
           {user?.uid ? (
             <>
               <div className="hidden sm:flex flex-row space-x-4">
+                <Link
+                  to="signup"
+                  className="rounded-md flex space-x-2 w-32 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  My Schedules
+                </Link>
                 <button
                   to="signup"
                   className="rounded-md flex space-x-2 w-24 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
