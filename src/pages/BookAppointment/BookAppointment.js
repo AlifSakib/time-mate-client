@@ -81,6 +81,7 @@ const BookAppointment = () => {
           first_name: state.firstname,
           last_name: state.lastname,
           email: state.email,
+          status: false,
           event: {
             date: formatDate(startDate),
             title: state.event,

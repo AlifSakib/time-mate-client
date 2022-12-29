@@ -1,13 +1,32 @@
 import React from "react";
-import Edit from "../../components/Edit";
+import { toast } from "react-hot-toast";
 
-const MyAppointment = ({ my_booking }) => {
+const Schedules = ({ all_booking, refetch }) => {
   const {
     first_name,
     last_name,
     email,
+    status,
+    _id,
     event: { title, date },
-  } = my_booking;
+  } = all_booking;
+
+  const handleStatus = (_id) => {
+    fetch(`http://localhost:5000/all-bookings/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast.success(`Completed`);
+          refetch();
+        }
+      });
+  };
   return (
     <div>
       <div className="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl relative">
@@ -35,16 +54,21 @@ const MyAppointment = ({ my_booking }) => {
           <p className="text-sm leading-5 text-gray-900">
             Appointment Date : {date}
           </p>
-        </div>
-        <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
-        <div className="absolute top-10 right-10">
-          <button>
-            <Edit></Edit>
+          <button
+            onClick={() => handleStatus(_id)}
+            className={
+              status
+                ? "text-sm leading-5  bg-green-300  rounded px-2 py-1 mt-2 text-white"
+                : "text-sm leading-5  bg-red-300 rounded px-2 py-1 mt-2 text-white"
+            }
+          >
+            {status ? "Completed" : "Pending . . ."}
           </button>
         </div>
+        <div className="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100" />
       </div>
     </div>
   );
 };
 
-export default MyAppointment;
+export default Schedules;

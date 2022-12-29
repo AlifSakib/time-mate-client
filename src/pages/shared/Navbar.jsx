@@ -121,9 +121,16 @@ export default function Navbar() {
               </h1>
             </Link>
           </div>
+
           {user?.uid ? (
             <>
               <div className="hidden sm:flex flex-row space-x-4">
+                <Link
+                  to="manage-schedule"
+                  className="rounded-md flex space-x-2 w-36 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  Manage Schedule
+                </Link>
                 <Link
                   to="my-appointments"
                   className="rounded-md flex space-x-2 w-36 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
