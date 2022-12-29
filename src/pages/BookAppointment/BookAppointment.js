@@ -72,15 +72,6 @@ const BookAppointment = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  //   axios
-  //     .get(`http://localhost:5000/all-bookings`)
-  //     .then(function (res) {
-  //       setBooking(res.data.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-
   const handleBooking = (e) => {
     e.preventDefault();
 

@@ -5,6 +5,7 @@ import SignUp from "../pages/Account/SignUp";
 import BookAppointment from "../pages/BookAppointment/BookAppointment";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
+import MyAppointments from "../pages/MyAppointments/MyAppointments";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: "/book-appointments",
         element: <BookAppointment></BookAppointment>,
+      },
+      {
+        path: "my-appointments",
+        element: <MyAppointments></MyAppointments>,
       },
       {
         path: "signin",
