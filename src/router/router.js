@@ -7,6 +7,7 @@ import BookAppointment from "../pages/BookAppointment/BookAppointment";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import MyAppointments from "../pages/MyAppointments/MyAppointments";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/book-appointments",
-        element: <BookAppointment></BookAppointment>,
+        element: (
+          <PrivateRoute>
+            <BookAppointment></BookAppointment>
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-appointments",

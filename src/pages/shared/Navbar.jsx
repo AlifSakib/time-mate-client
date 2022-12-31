@@ -138,6 +138,7 @@ export default function Navbar() {
                   My Appointments
                 </Link>
                 <button
+                  onClick={handleLogOut}
                   to="signup"
                   className="rounded-md flex space-x-2 w-24 h-10 font-normal text-sm leading-3 text-indigo-700 bg-white border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
                 >
@@ -330,6 +331,18 @@ export default function Navbar() {
           {user?.uid ? (
             <>
               <div className="flex flex-col gap-4 mt-4 w-80 mx-auto ">
+                <Link
+                  to="manage-schedule"
+                  className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-indigo-700 bg-indigo-600 bg-opacity-0 hover:opacity-100  border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  Manage Schedule
+                </Link>
+                <Link
+                  to="my-appointments"
+                  className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-indigo-700 bg-indigo-600 bg-opacity-0 hover:opacity-100  border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"
+                >
+                  My Appointments
+                </Link>
                 <button
                   onClick={handleLogOut}
                   className="rounded-md flex space-x-2 w-full h-10 font-normal text-sm leading-3 text-indigo-700 bg-indigo-600 bg-opacity-0 hover:opacity-100  border border-indigo-700 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 duration-150 justify-center items-center"

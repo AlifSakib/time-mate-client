@@ -12,7 +12,7 @@ const Schedules = ({ all_booking, refetch }) => {
   } = all_booking;
 
   const handleStatus = (_id) => {
-    fetch(`http://localhost:5000/all-bookings/${_id}`, {
+    fetch(`https://time-mate-server-alifsakib.vercel.app/all-bookings/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

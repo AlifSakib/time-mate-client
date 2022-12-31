@@ -9,14 +9,14 @@ const MyAppointments = () => {
     queryKey: ["my_bookings"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/my-bookings/${user?.email}`
+        `https://time-mate-server-alifsakib.vercel.app/my-bookings/${user?.email}`
       );
       const data = await res.json();
 
       return data;
     },
   });
-  console.log(my_bookings);
+
   return (
     <div>
       <div className="bg-gray-100 h-screen">

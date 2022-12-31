@@ -20,13 +20,16 @@ const MyAppointment = ({ my_booking }) => {
 
   const handleChange = (_id) => {
     setEdit(false);
-    fetch(`http://localhost:5000/all-bookings/update-date/${_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ editedDate, title }),
-    })
+    fetch(
+      `https://time-mate-server-alifsakib.vercel.app/all-bookings/update-date/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ editedDate, title }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

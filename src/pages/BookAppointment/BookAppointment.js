@@ -28,24 +28,16 @@ const BookAppointment = () => {
 
   const handleDateClick = (arg) => {
     const selectedDate = arg.dateStr;
-    console.log(selectedDate);
   };
 
   booking.map((b) => info.push(b.event));
-  console.log(info);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/all-bookings")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setBooking(data.data);
-  //     });
-  // }, []);
 
   const { data: all_bookings = [], refetch } = useQuery({
     queryKey: ["all_bookings"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/all-bookings`);
+      const res = await fetch(
+        `https://time-mate-server-alifsakib.vercel.app/all-bookings`
+      );
       const data = await res.json();
 
       return setBooking(data.data);
@@ -86,28 +78,32 @@ const BookAppointment = () => {
   const handleBooking = (e) => {
     e.preventDefault();
 
-    axios.all([
-      axios
-        .post(`http://localhost:5000/all-bookings`, {
-          first_name: state.firstname,
-          last_name: state.lastname,
-          email: state.email,
-          status: false,
-          event: {
-            date: formatDate(startDate),
-            title: state.event,
-          },
-        })
-        .then(function (res) {
-          if (res.data.success) {
-            toast.success("Appointment Booked");
-            refetch();
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        }),
-    ]);
+    if (!state.checkbox) {
+      toast.error("Please agree with the terms of service");
+    } else {
+      axios.all([
+        axios
+          .post(`https://time-mate-server-alifsakib.vercel.app/all-bookings`, {
+            first_name: state.firstname,
+            last_name: state.lastname,
+            email: state.email,
+            status: false,
+            event: {
+              date: formatDate(startDate),
+              title: state.event,
+            },
+          })
+          .then(function (res) {
+            if (res.data.success) {
+              toast.success("Appointment Booked");
+              refetch();
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          }),
+      ]);
+    }
   };
 
   return (
@@ -309,7 +305,7 @@ const BookAppointment = () => {
               <button
                 type="submit"
                 aria-label="Next step"
-                disabled={!state.checkbox}
+                // disabled={!state.checkbox}
                 className="flex items-center justify-center py-4 px-7 focus:outline-none bg-white border rounded border-gray-400 mt-7 md:mt-14 hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
               >
                 <span className="text-sm font-medium text-center text-gray-800 capitalize">

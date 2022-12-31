@@ -6,7 +6,9 @@ const ManageSchedule = () => {
   const { data: all_bookings = [], refetch } = useQuery({
     queryKey: ["all_bookings"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/all-bookings`);
+      const res = await fetch(
+        `https://time-mate-server-alifsakib.vercel.app/all-bookings`
+      );
       const data = await res.json();
 
       return data.data;

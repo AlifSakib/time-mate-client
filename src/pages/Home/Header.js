@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
@@ -55,10 +56,20 @@ export const Header = () => {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                <a
+              <motion.div
+                className="grid grid-cols-2 gap-4 sm:grid-cols-3"
+                initial={{ y: 100 }}
+                animate={{ y: 10 }}
+                transition={{
+                  delay: 0.2,
+                  duration: 1,
+                  type: "spring",
+                  stiffness: 120,
+                }}
+              >
+                <Link
                   className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
-                  href="/accountant"
+                  to="#"
                 >
                   <span className="inline-block rounded-lg bg-green-400 p-3 text-slate-700">
                     <svg
@@ -84,7 +95,7 @@ export const Header = () => {
                   <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600 text-white">
                     Schedule appointments online with ease
                   </p>
-                </a>
+                </Link>
 
                 <a
                   className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring bg-white"
@@ -238,7 +249,7 @@ export const Header = () => {
                     platform
                   </p>
                 </a>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
