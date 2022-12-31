@@ -1,10 +1,12 @@
 import React, { useContext, useReducer } from "react";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const { userLogin, googleSignIn } = useContext(AuthContext);
 
   const initialState = {
@@ -32,7 +34,7 @@ function SignIn() {
     userLogin(state.email, state.password)
       .then((result) => {
         toast.success(`Welcome Back, Login Success`);
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         toast.error(error.message);
@@ -43,7 +45,7 @@ function SignIn() {
     googleSignIn()
       .then((result) => {
         toast.success(`Welcome Back, Login Success`);
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         toast.error(error.message);
